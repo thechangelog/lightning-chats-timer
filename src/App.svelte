@@ -1,43 +1,37 @@
 <script>
-	export let podcast;
+	import Timer from './Timer.svelte';
+  export let podcast;
   export let duration;
-
-  let initial = duration;
-  let counting = false;
-  let pid;
-
-  function tick() {
-    duration = duration - 1;
-  }
-
-  function play() {
-    pid = setInterval(tick, 1000);
-    counting = true;
-  }
-
-  function pause() {
-    clearInterval(pid);
-    counting = false;
-  }
-
-  function reset() {
-    duration = initial;
-  }
+  export let subscribeUrl;
 </script>
 
 <style>
-	h1 {
-		color: purple;
-	}
+ .cta {
+   font-family: monospace;
+   position: absolute;
+   bottom: 1vw;
+   left: 1vw;
+   max-width: 500px;
+ }
+ .cta p {
+   font-size: calc(1em + 0.125vw);
+   line-height: 1.5em;
+ }
+ .cta p:last-child {
+   margin-bottom: 0;
+ }
+ .cta p.small {
+   font-size: 0.95em;
+ }
 </style>
 
-<h1>Welcome to {podcast}</h1>
+<div class="cta">
+  <p>
+    Welcome to <strong>{podcast}</strong> live from <em>Conference Name</em>.<br />
+    Listen and subscribe at <u>{subscribeUrl}</u>.
+  </p>
+  <!-- TODO: We need to buy this license if we end up using this font. -->
+  <p class="small">Typeset in <strong>Nostra by Lucas Descroix</strong> and<br />whatever <strong>monospace font is included in this OS</strong>.</p>
+</div>
 
-{#if counting}
-<button on:click={pause}>Pause</button>
-{:else}
-<button on:click={play}>Start</button>
-{/if}
-<button on:click={reset}>Reset</button>
-
-<p>There are {duration} seconds left</p>
+<Timer duration={duration} />
