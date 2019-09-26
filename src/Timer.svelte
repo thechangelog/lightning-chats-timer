@@ -6,7 +6,11 @@
   let pid;
 
   function tick() {
-    duration = duration - 1;
+    if (duration > 0) {
+      duration = duration - 1;
+    } else {
+      finish();
+    }
   }
 
   function play() {
@@ -17,6 +21,12 @@
   function pause() {
     clearInterval(pid);
     counting = false;
+  }
+
+  // just like pause but we can do other cool stuff
+  function finish() {
+    pause();
+    // ...
   }
 
   function reset() {
@@ -40,7 +50,7 @@
 	h1 {
     color: white;
   }
-  
+
   .countdown {
     align-items: center;
     justify-content: center;
