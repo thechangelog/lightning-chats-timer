@@ -14,7 +14,7 @@
   }
 
   function play() {
-    pid = setInterval(tick, 100);
+    pid = setInterval(tick, 1000);
     counting = true;
   }
 
@@ -42,13 +42,34 @@
     return pad(minutes, 1) + ':' + pad(seconds, 2);
   }
 
+  function getAnimationState(duration, initial) {
+    if (duration === 0) {
+      return "ended";
+    } else if (duration <= 60) {
+      return "ending";
+    }
+    
+    return "normal";
+  }
+
   $: displayDuration = sec2time(duration);
   $: scale = (1 - (duration / initial * 0.25));
+  $: animationState = getAnimationState(duration, initial);
 </script>
 
 <style>
+  @keyframes pulsing {
+    from {
+      color: #ffffff;
+    }
+
+    to {
+      color: #FC4C02;
+    }
+  }
+
 	h1 {
-    color: white;
+    color: #ffffff;
   }
 
   .countdown {
@@ -65,10 +86,15 @@
 
   time {
     display: block;
-    font-family: "Nostrav", "Helvetica Neue", sans-serif;
     font-size: 18vw;
     text-align: center;
-    /* transition: all 1s linear; */
+    transition: font-size 0.1s ease-in;
+  }
+  time.ending {
+    animation: pulsing 1s ease-in infinite alternate running;
+  }
+  time.ended {
+    animation: pulsing 0.1s ease-in infinite alternate running;
   }
 </style>
 
@@ -80,5 +106,5 @@
 <button on:click={reset}>Reset</button>
 
 <div class="countdown">
-  <time style="transform: scale({scale})">{displayDuration}</time>
+  <time class="{animationState}" style="transform: scale({scale})"><span>{displayDuration}</span></time>
 </div>

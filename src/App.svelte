@@ -7,7 +7,7 @@
 
 <style>
  .cta {
-   font-family: monospace;
+   font-size: 0.75em;
    position: absolute;
    bottom: 1vw;
    left: 1vw;
@@ -27,11 +27,11 @@
 
 <div class="cta">
   <p>
-    Welcome to <strong>{podcast}</strong> live from <em>Conference Name</em>.<br />
+    Welcome to <em>{podcast}</em> live from <em>Conference Name</em>.<br />
     Listen and subscribe at <u>{subscribeUrl}</u>.
   </p>
   <!-- TODO: We need to buy this license if we end up using this font. -->
-  <p class="small">Typeset in <strong>Nostra by Lucas Descroix</strong> and<br />whatever <strong>monospace font is included in this OS</strong>.</p>
+  <p class="small">Built with <em>Svelte</em> and typeset in <em>Arnold</em> by <em>Rüdiger</em>.</p>
 </div>
 
 <Timer duration={duration} />
