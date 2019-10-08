@@ -48,7 +48,7 @@
     } else if (duration <= 60) {
       return "ending";
     }
-    
+
     return "normal";
   }
 
@@ -68,7 +68,7 @@
     }
   }
 
-	h1 {
+  h1 {
     color: #ffffff;
   }
 
