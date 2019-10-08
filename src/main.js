@@ -6,8 +6,7 @@ const app = new App({
     podcast: "JS Party",
     conference: "All Things Open",
     subscribeUrl: "changelog.com/jsparty",
-    duration: 300, // seconds
-    buzzer: ""
+    duration: 300 // seconds
   }
 });
 

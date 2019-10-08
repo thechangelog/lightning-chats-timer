@@ -13,7 +13,7 @@
     }
   }
 
-  function play() {
+  function count() {
     pid = setInterval(tick, 1000);
     counting = true;
   }
@@ -21,6 +21,11 @@
   function pause() {
     clearInterval(pid);
     counting = false;
+  }
+
+  function toggleCounting() {
+    if (counting) pause();
+    else count();
   }
 
   // just like pause but we can do other cool stuff
@@ -34,27 +39,23 @@
   }
 
   function sec2time(timeInSeconds) {
-    var pad = function(num, size) { return ('000' + num).slice(size * -1); },
+    let pad = function(num, size) { return ("000" + num).slice(size * -1); },
     time = parseFloat(timeInSeconds).toFixed(3),
     minutes = Math.floor(time / 60) % 60,
     seconds = Math.floor(time - minutes * 60);
 
-    return pad(minutes, 1) + ':' + pad(seconds, 2);
+    return pad(minutes, 1) + ":" + pad(seconds, 2);
   }
 
-  function getAnimationState(duration, initial) {
-    if (duration === 0) {
-      return "ended";
-    } else if (duration <= 60) {
-      return "ending";
-    }
-
+  function getAnimationState(duration) {
+    if (duration < 1) return "ended";
+    if (duration < 61) return "ending";
     return "normal";
   }
 
   $: displayDuration = sec2time(duration);
   $: scale = (1 - (duration / initial * 0.25));
-  $: animationState = getAnimationState(duration, initial);
+  $: animationState = getAnimationState(duration);
 </script>
 
 <style>
@@ -76,7 +77,6 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    pointer-events: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -89,6 +89,7 @@
     font-size: 18vw;
     text-align: center;
     transition: font-size 0.1s ease-in;
+    cursor: pointer;
   }
   time.ending {
     animation: pulsing 1s ease-in infinite alternate running;
@@ -99,12 +100,14 @@
 </style>
 
 {#if counting}
-<button on:click={pause}>Pause</button>
+<!-- <button on:click={pause}>Pause</button> -->
 {:else}
-<button on:click={play}>Start</button>
+<!-- <button on:click={count}>Start</button> -->
 {/if}
-<button on:click={reset}>Reset</button>
+<!-- <button on:click={reset}>Reset</button> -->
 
 <div class="countdown">
-  <time class="{animationState}" style="transform: scale({scale})"><span>{displayDuration}</span></time>
+  <time class="{animationState}" style="transform: scale({scale})">
+    <span on:click={toggleCounting}>{displayDuration}</span>
+  </time>
 </div>
