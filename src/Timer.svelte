@@ -53,6 +53,12 @@
     return "normal";
   }
 
+  document.addEventListener("keydown", (event) => {
+    if (event.keyCode === 32) { // space bar
+      toggleCounting()
+    }
+  });
+
   $: displayDuration = sec2time(duration);
   $: scale = (1 - (duration / initial * 0.25));
   $: animationState = getAnimationState(duration);
