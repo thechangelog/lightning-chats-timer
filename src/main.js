@@ -4,8 +4,8 @@ const app = new App({
   target: document.body,
   props: {
     podcast: "JS Party",
+    slug: "jsparty",
     conference: "All Things Open",
-    subscribeUrl: "changelog.com/jsparty",
     duration: 300 // seconds
   }
 });

@@ -3,7 +3,10 @@
   export let podcast;
   export let conference;
   export let duration;
-  export let subscribeUrl;
+  export let slug;
+  // this is a hack until we can actually set classes via <svelte:body />
+  // see https://github.com/sveltejs/svelte/issues/3105
+  document.body.classList.add(slug);
 </script>
 
 <style>
@@ -35,7 +38,7 @@
 <div class="cta">
   <p>
     Welcome to <em>{podcast}</em> live from <em>{conference}</em>!<br />
-    Listen and subscribe at <u>{subscribeUrl}</u>
+    Listen and subscribe at <u>changelog.com/{slug}</u>
   </p>
 </div>
 
