@@ -1,67 +1,66 @@
 <script>
-  export let duration;
+  export let duration
 
-  let initial = duration;
-  let counting = false;
-  let pid;
+  let initial = duration
+  let counting = false
+  let pid
 
   function tick() {
-    if (duration > 0) {
-      duration = duration - 1;
-    } else {
-      finish();
-    }
+    if (duration > 0) duration = duration - 1
+    else finish()
   }
 
   function count() {
-    pid = setInterval(tick, 1000);
-    counting = true;
+    pid = setInterval(tick, 1000)
+    counting = true
   }
 
   function pause() {
-    clearInterval(pid);
-    counting = false;
+    clearInterval(pid)
+    counting = false
   }
 
   function toggleCounting() {
-    if (counting) pause();
-    else count();
+    if (counting) pause()
+    else count()
   }
 
   // just like pause but we can do other cool stuff
   function finish() {
-    pause();
+    pause()
     // ...
   }
 
   function reset() {
-    duration = initial;
+    duration = initial
   }
 
-  function sec2time(timeInSeconds) {
-    let pad = function(num, size) { return ("000" + num).slice(size * -1); },
-    time = parseFloat(timeInSeconds).toFixed(3),
-    minutes = Math.floor(time / 60) % 60,
-    seconds = Math.floor(time - minutes * 60);
+  function formatSeconds(seconds) {
+    let pad = (num, size) => { return ("000" + num).slice(size * -1) }
 
-    return pad(minutes, 1) + ":" + pad(seconds, 2);
+    let time = parseFloat(seconds).toFixed(3)
+    let minutes = Math.floor(time / 60) % 60
+    let magnitude = minutes.toString(10).length
+    let seconds = Math.floor(time - minutes * 60)
+
+    return `${pad(minutes, magnitude)}:${pad(seconds, 2)}`
   }
 
   function getAnimationState(duration) {
-    if (duration < 1) return "ended";
-    if (duration < 61) return "ending";
-    return "normal";
+    if (duration < 1) return "ended"
+    if (duration < 61) return "ending"
+    return "normal"
   }
 
   document.addEventListener("keydown", (event) => {
     if (event.keyCode === 32) { // space bar
       toggleCounting()
     }
-  });
+  })
 
-  $: displayDuration = sec2time(duration);
-  $: scale = (1 - (duration / initial * 0.25));
-  $: animationState = getAnimationState(duration);
+  $: displayDuration = formatSeconds(duration)
+  $: scale = (1 - (duration / initial * 0.25))
+  $: animationState = getAnimationState(duration)
 </script>
 
 <style>

@@ -1,12 +1,12 @@
 <script>
-  import Timer from "./Timer.svelte";
-  export let podcast;
-  export let conference;
-  export let duration;
-  export let slug;
+  import Timer from "./Timer.svelte"
+  export let podcast
+  export let conference
+  export let duration
+  export let slug
   // this is a hack until we can actually set classes via <svelte:body />
   // see https://github.com/sveltejs/svelte/issues/3105
-  document.body.classList.add(slug);
+  document.body.classList.add(slug)
 </script>
 
 <style>
