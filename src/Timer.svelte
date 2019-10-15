@@ -35,10 +35,10 @@
     duration = initial
   }
 
-  function formatSeconds(seconds) {
+  function formatDuration(duration) {
     let pad = (num, size) => { return ("000" + num).slice(size * -1) }
 
-    let time = parseFloat(seconds).toFixed(3)
+    let time = parseFloat(duration).toFixed(3)
     let minutes = Math.floor(time / 60) % 60
     let magnitude = minutes.toString(10).length
     let seconds = Math.floor(time - minutes * 60)
@@ -58,7 +58,7 @@
     }
   })
 
-  $: displayDuration = formatSeconds(duration)
+  $: displayDuration = formatDuration(duration)
   $: scale = (1 - (duration / initial * 0.25))
   $: animationState = getAnimationState(duration)
 </script>
